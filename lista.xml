@@ -1,0 +1,13 @@
+<CATALOG>
+    <FILE_ENTRY>
+        <FILE_NAME>exemplo1.txt</FILE_NAME>
+        <DIGEST_ENTRY>
+            <DIGEST_TYPE>SHA1</DIGEST_TYPE>
+            <DIGEST_HEX>123abc</DIGEST_HEX>
+        </DIGEST_ENTRY>
+        <DIGEST_ENTRY>
+            <DIGEST_TYPE>MD5</DIGEST_TYPE>
+            <DIGEST_HEX>456def</DIGEST_HEX>
+        </DIGEST_ENTRY>
+    </FILE_ENTRY>
+</CATALOG>
