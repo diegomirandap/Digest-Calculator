@@ -8,6 +8,12 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -23,26 +29,10 @@ public class DigestCalculator{
         File pasta = new File(args[1]);
         File arqListaDigest = new File(args[2]);
 
-        //carregar lista de digests
+        //Carregar lista de digests
         Map<String, Map<String, String>> listaDigests = carregarDigests(arqListaDigest);
         //hash map para mapear cada um dos arquivos, seus tipos de digest e o digest calculado
         //Map<FILE_NAME, Map<DIGEST_TYPE, DIGEST_HEX>>
-
-
-        //Testar o hashmap
-        System.out.println("### Dicionário de Digests carregado do XML ###");
-        for (Map.Entry<String, Map<String, String>> entradaArquivo : listaDigests.entrySet()) {
-            String nomeArquivo = entradaArquivo.getKey();
-            Map<String, String> digests = entradaArquivo.getValue();
-
-            System.out.println("Arquivo: " + nomeArquivo);
-            for (Map.Entry<String, String> digest : digests.entrySet()) {
-                System.out.println("  Tipo: " + digest.getKey() + " | Valor: " + digest.getValue());
-            }
-        }
-        System.out.println("############################################");
-
-
 
         File[] arquivos = pasta.listFiles();
         if (arquivos != null) {
@@ -50,13 +40,11 @@ public class DigestCalculator{
                 //Para cada um dos arquivos dentro do path fornecido
                 if (arquivo.isFile()) {
                     //Calcula o digest
-                    //String digestCalculado = calcularDigest(arquivo, tipoDigest);
-                    String digestCalculado = "123abc";
+                    String digestCalculado = calcularDigest(arquivo, tipoDigest);
                     //Verifica a compatibilidade do calculado com o fornecido
                     String status = compararDigest(arquivo.getName(), digestCalculado, tipoDigest, listaDigests);
-                    //
                     System.out.println(arquivo.getName() + " " + tipoDigest + " " + digestCalculado + " (" + status + ")");
-                    if (status.equals("NOT FOUND")) {
+                    if (status.equals("NOT_FOUND")) {
                         adicionarDigest(arquivo.getName(), tipoDigest, digestCalculado, listaDigests, arqListaDigest);
                     }
                 }
@@ -84,9 +72,7 @@ public class DigestCalculator{
             buf.append((hex.length() < 2 ? "0" : "") + hex);
         }
 
-        String digestFinal = buf.toString();
-
-        return digestFinal;
+        return buf.toString();
     }
 
     private static Map<String, Map<String, String>> carregarDigests(File arquivo) throws Exception {
@@ -105,7 +91,7 @@ public class DigestCalculator{
         for (int i = 0; i < fileEntries.getLength(); i++) {
             Element fileEntry = (Element) fileEntries.item(i);
 
-            //Obter nome do arquivo
+            // Obter nome do arquivo
             String nomeArq = fileEntry.getElementsByTagName("FILE_NAME").item(0).getTextContent().trim();
 
             //Criar o mapa da segunda camada
@@ -118,7 +104,7 @@ public class DigestCalculator{
                 String tipo = digestEntry.getElementsByTagName("DIGEST_TYPE").item(0).getTextContent().trim();
                 String valor = digestEntry.getElementsByTagName("DIGEST_HEX").item(0).getTextContent().trim();
 
-                // Preenchemos o mapa de digests internos
+                //Preencher o mapa de digests internos
                 digests.put(tipo, valor);
             }
 
@@ -159,12 +145,12 @@ public class DigestCalculator{
     }
 
     private static void adicionarDigest(String fileName, String tipoDigest, String digestCalculado, Map<String, Map<String, String>> listaDigests, File arquivoListaDigest) throws Exception {
-        /*
+
         //Abrir o XML com DOM
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document doc = builder.parse(arquivoListaDigest);
-        doc.getDocumentElement().normalize();
+        //doc.getDocumentElement().normalize();
 
         //Pegar o elemento raiz <CATALOG>
         Element catalog = (Element) doc.getElementsByTagName("CATALOG").item(0);
@@ -214,7 +200,7 @@ public class DigestCalculator{
         DOMSource source = new DOMSource(doc);
         StreamResult result = new StreamResult(arquivoListaDigest);
         transformer.transform(source, result);
-*/
+
         return;
     }
 }
