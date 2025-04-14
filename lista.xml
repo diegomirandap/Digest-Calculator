@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <CATALOG>
-    <FILE_ENTRY>
-        <FILE_NAME>exemplo1.txt</FILE_NAME>
+    <FILE_ENTRY>                        
+        <FILE_NAME>exemplo1.dat</FILE_NAME> <!-- CERTO -->
         <DIGEST_ENTRY>
-            <DIGEST_TYPE>SHA1</DIGEST_TYPE>
-            <DIGEST_HEX>123abc</DIGEST_HEX>
+            <DIGEST_TYPE>SHA-1</DIGEST_TYPE>              
+            <DIGEST_HEX>945f2fa6d0463b8aad44846ffa9c2ad6d6284495</DIGEST_HEX> <!--"Testeabc"-->
         </DIGEST_ENTRY>
         <DIGEST_ENTRY>
             <DIGEST_TYPE>MD5</DIGEST_TYPE>
-            <DIGEST_HEX>123abc</DIGEST_HEX>
+            <DIGEST_HEX>b0888a7eb93e11173a863bee20640a49</DIGEST_HEX> <!--"Testeabc"-->
+        </DIGEST_ENTRY>
+        <DIGEST_ENTRY>             
+            <DIGEST_TYPE>SHA-256</DIGEST_TYPE> 
+            <DIGEST_HEX>2e1ebc2bc34c608ce9be4aeb2cef9046e976c899e062ba41c9ed7f3bfc887ab0</DIGEST_HEX> <!--"Testeabc"-->
+        </DIGEST_ENTRY>
+    </FILE_ENTRY> 
+
+    <FILE_ENTRY>       
+        <FILE_NAME>exemplo2.dat</FILE_NAME> <!-- ERRADO -->
+        <DIGEST_ENTRY>
+            <DIGEST_TYPE>SHA-1</DIGEST_TYPE>              
+            <DIGEST_HEX>945f2fa6d0463b8aad44846ffa9c2ad6d6284495</DIGEST_HEX>
+            <!--"Testeabc" => c8e70f587ac3d0a4e1fd17e5a677793a9fd33abc-->
+        </DIGEST_ENTRY>
+        <DIGEST_ENTRY>             
+            <DIGEST_TYPE>MD5</DIGEST_TYPE> 
+            <DIGEST_HEX>b0888a7eb93e11173a863bee20640a49</DIGEST_HEX>
+            <!--"TesteABC" => c4827fc4f64129bede7a93afb70a369f-->
+        </DIGEST_ENTRY>
+        <DIGEST_ENTRY>             
+            <DIGEST_TYPE>SHA-256</DIGEST_TYPE> 
+            <DIGEST_HEX>2e1ebc2bc34c608ce9be4aeb2cef9046e976c899e062ba41c9ed7f3bfc887ab0</DIGEST_HEX>
+            <!--"TesteABC" ==> ed5750ca173221fe9ce4c25e71e06353d545bf1d901369466aa0d37a5458920b-->
         </DIGEST_ENTRY>
     </FILE_ENTRY>
 </CATALOG>
