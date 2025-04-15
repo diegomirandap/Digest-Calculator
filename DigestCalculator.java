@@ -1,4 +1,8 @@
-// java DigestCalculator.java "SHA-256" "arquivos/" "lista.xml"
+/*
+INF1416- Segurança da Informação
+Diego Miranda - 2210996
+Felipe Cancella -2210487
+*/
 import java.io.File;
 import java.nio.file.Files;
 import java.security.MessageDigest;
@@ -47,6 +51,7 @@ public class DigestCalculator{
                     if (status.equals("NOT_FOUND")) {
                         adicionarDigest(arquivo.getName(), tipoDigest, digestCalculado, listaDigests, arqListaDigest);
                     }
+                    //Caso seja status==COLISION ele não adiciona por natureza
                 }
             }
         }
